@@ -46,7 +46,7 @@ Monads. Everybody in the C++ community is talking about functional programming t
 
 The inspiration for this library comes mainly from the awesome Joaquín M López Muñoz's [*"A workshop on monads with C++14"*](https://github.com/joaquintides/cpp14monadworkshop) and its exercises about the continuation monad.
 
-Snail is based in several facts:
+With snail I have two main goals:
 
  - **Use existing algorithms**: Write a mechanism to reuse the existing algorithms from the Standard Library, instead of hand-writting such algorithms again with a different interface.
 
@@ -54,7 +54,7 @@ Snail is based in several facts:
 
 I should recall (again) that the point of this library is not to make an awesome container-algortihms pipeline. What I'm trying to do is to have a working container-algorithms pipeline without many effort, without having to rewrite those algorithms. Just take the STL.
 
-Requeriments
+Requirements
 ------------
 
 This library relies heavily on function return type deduction and generic lambdas. Any C++14 compliant compiler is fine.  
