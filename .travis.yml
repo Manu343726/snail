@@ -2,25 +2,27 @@ language: cpp
 compiler:
   - gcc
   - clang
-build_type:
-  - Debug
-  - Release
 env:
-  - LIBCXX=true
-  - LIBCXX=false
-  - BUILD_TYPE=$build_type
+  - LIBCXX=true BUILD_TYPE=Debug
+  - LIBCXX=true BUILD_TYPE=Release
+  - LIBCXX=false BUILD_TYPE=Debug
+  - LIBCXX=false BUILD_TYPE=Release
 global:
   - GCC_VERSION="4.9"
+matrix:
+  exclude:
+    - compiler: gcc
+      env: LIBCXX=true
 
 before_install:
   - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
   - if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
   - sudo apt-get update -qq
-install:
+
   - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-${GCC_VERSION}; fi
   - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq gcc-${GCC_VERSION}; fi
-  - if [ "$CXX" == "g++" ]; then sudo ln -v -s -f $(which g++-${GCC_VERSION}) /usr/bin/g++ ; fi
-  - if [ "$CXX" == "g++" ]; then sudo ln -v -s -f $(which gcc-${GCC_VERSION}) /usr/bin/gcc ; fi
+  - if [ "$CXX" == "g++" ]; then sudo ln -s -v -f $(which g++-${GCC_VERSION}) /usr/bin/g++ ; fi
+  - if [ "$CXX" == "g++" ]; then sudo ln -s -v -f $(which gcc-${GCC_VERSION}) /usr/bin/gcc ; fi
 
   - if [ "$LIBCXX" == "true" ]; then cwd=$(pwd); fi
   - if [ "$LIBCXX" == "true" ]; then export CXXFLAGS="-std=c++0x -stdlib=libc++"; fi
@@ -34,6 +36,7 @@ install:
   - if [ "$LIBCXX" == "true" ]; then CXX_FLAGS="${CXX_FLAGS} -stdlib=libc++ -I/usr/include/c++/v1/"; fi
   - if [ "$LIBCXX" == "true" ]; then CXX_LINKER_FLAGS="${CXX_FLAGS} -L/usr/lib/ -lc++"; fi
 
+install:
   - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
   - bii setup:cpp
   - bii --version
