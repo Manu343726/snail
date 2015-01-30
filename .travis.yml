@@ -11,9 +11,8 @@ global:
   - GCC_VERSION="4.9"
 
 matrix:
-  exclude:
-    - compiler: gcc
-      env: LIBCXX=true
+  - compiler: clang
+
 
 before_install:
   - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
@@ -40,6 +39,7 @@ install:
   - wget http://apt.biicode.com/install.sh && chmod +x install.sh && ./install.sh
   - bii setup:cpp
   - bii --version
+  - $CXX --version
   - bii init
 script:
   - bii find
