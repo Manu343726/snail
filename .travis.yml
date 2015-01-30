@@ -3,11 +3,11 @@ compiler:
   - gcc
   - clang
 env:
-  - LIBCXX=true BUILD_TYPE=Debug
-  - LIBCXX=true BUILD_TYPE=Release
-  - LIBCXX=false BUILD_TYPE=Debug
-  - LIBCXX=false BUILD_TYPE=Release
-  
+  matrix:
+    - LIBCXX=true BUILD_TYPE=Debug
+    - LIBCXX=true BUILD_TYPE=Release
+    - LIBCXX=false BUILD_TYPE=Debug
+    - LIBCXX=false BUILD_TYPE=Release
   global:
     - GCC_VERSION="4.9"
 matrix:
