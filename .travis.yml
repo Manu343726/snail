@@ -42,8 +42,11 @@ script:
 - bii cpp:configure -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=$(which $CXX) -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 - bii cpp:build
 - "./bin/manu343726_snail_test"
+after_success:
+- cp README.md blocks/manu343726/snail #Update readme
 deploy:
   provider: biicode
   user: manu343726
   password:
     secure: D+KebyVKL+LGd05Wpz/WOdQZAKc7RyTY7H+DGpO54TlD8N5WrhV2HKmqrFjMKEB8GZ4WNoDGRVH/WcwhgTipjf+o/UVgk43glSq3C3D+hoETCoorqLuXvYp7Fiv3q4QICDE/3TXHPlnEiUBTYJFH+OwEQnZO0gnr1tKGcZFmEv0=
+  skip_cleanup: true #Update block readme
