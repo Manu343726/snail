@@ -11,31 +11,37 @@ which makes possible to apply such algorithms on any entity, if a compatible ite
 
 My favorite example are stream iterators:
 
-	auto numbers = {1, 2, 3, 4, 5};
+``` cpp
+auto numbers = {1, 2, 3, 4, 5};
 
-    std::copy(std::begin(numbers), std::end(numbers), 
-              std::ostream_iterator<std::string>(std::cout, " "));
+std::copy(std::begin(numbers), std::end(numbers), 
+          std::ostream_iterator<std::string>(std::cout, " "));
+```
 
 The above snippet prints the set of numbers on the standard output. It "copies" the numeric sequence to a sequence of output operations represented by a `std::ostream_iterator` instance.
 
 But everything is not that simple and awesome. The iterator-range interface comes at a high cost: **Is not easy to chain multiple STL algorithms**.  Whenever you want to apply multiple algorithms setp by sep the process becomes a bit clumsy:
 
-    std::vector<int> v = {1, 2, 3, 5, 7, 11};
-    decltype(v) w;
+``` cpp
+std::vector<int> v = {1, 2, 3, 5, 7, 11};
+decltype(v) w;
 
-    std::copy_if(std::begin(v), std::end(v), 
-                 std::back_inserter(w), 
-                 [](int x){ return is_prime(x); });
+std::copy_if(std::begin(v), std::end(v), 
+             std::back_inserter(w), 
+             [](int x){ return is_prime(x); });
 
-    std::swap(v,w);
-    w.clear();
+std::swap(v,w);
+w.clear();
 
-    std::sort(std::begin(v), std::end(v), std::less<int>{});
+std::sort(std::begin(v), std::end(v), std::less<int>{});
+```
 
 Compare that to the more natural fluent interface operating on the same vector along the pipeline of operations:
 
-    v.filter([](int x){ return is_prime(x); })
-     .sort(std::less<int>{})
+``` cpp
+v.filter([](int x){ return is_prime(x); })
+ .sort(std::less<int>{})
+```
 
 Snail is my try to get a continuation-ready set of algorithms to operate on C++ containers, but instead of reinventing all the algorithms, addapting them though a continuation monad (Or something resembling a continuation monad).
 
