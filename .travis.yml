@@ -2,16 +2,14 @@ language: cpp
 compiler:
   - gcc
   - clang
+build_type:
+  - Debug
+  - Release
 env:
-  - BUILD_TYPE=Debug
-  - BUILD_TYPE=Release
   - LIBCXX=true
   - LIBCXX=false
 global:
   - GCC_VERSION="4.9"
-
-matrix:
-  - compiler: clang
 
 
 before_install:
