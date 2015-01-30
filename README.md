@@ -6,7 +6,7 @@ Continuation-ready algorithms from STL algorithms
 Motivation
 ----------
 
-The C++ Standard Library comes with a very well suitted set of generic algotihms. The iterator-range design of such algorithms decouples them completely from the underlying data they are operating on,
+The C++ Standard Library comes with a very well suited set of generic algorithms. The iterator-range design of such algorithms decouples them completely from the underlying data they are operating on,
 which makes possible to apply such algorithms on any entity, if a compatible iterator interface is provided. 
 
 My favorite example are stream iterators:
@@ -20,7 +20,7 @@ std::copy(std::begin(numbers), std::end(numbers),
 
 The above snippet prints the set of numbers on the standard output. It "copies" the numeric sequence to a sequence of output operations represented by a `std::ostream_iterator` instance.
 
-But everything is not that simple and awesome. The iterator-range interface comes at a high cost: **Is not easy to chain multiple STL algorithms**.  Whenever you want to apply multiple algorithms setp by sep the process becomes a bit clumsy:
+But everything is not that simple and awesome. The iterator-range interface comes at a high cost: **Is not easy to chain multiple STL algorithms**.  Whenever you want to apply multiple algorithms step by step the process becomes a bit clumsy:
 
 ``` cpp
 std::vector<int> v = {1, 2, 3, 5, 7, 11};
@@ -54,11 +54,11 @@ The inspiration for this library comes mainly from the awesome Joaquín M López
 
 With snail I have two main goals:
 
- - **Use existing algorithms**: Write a mechanism to reuse the existing algorithms from the Standard Library, instead of hand-writting such algorithms again with a different interface.
+ - **Use existing algorithms**: Write a mechanism to reuse the existing algorithms from the Standard Library, instead of hand-writing such algorithms again with a different interface.
 
  - **Simple syntax**: Allow consecutive algorithm calls on the same container, with a simple pipe-like syntax built on top of a continuation monad. This is not something new, see Boost.Range or Eric Niebler's range-v3 container algorithms. My point here is to have a working set of pipeable algorithms with a couple of lines only, using existing STL algorithms.
 
-I should recall (again) that the point of this library is not to make an awesome container-algortihms pipeline. What I'm trying to do is to have a working container-algorithms pipeline without many effort, without having to rewrite those algorithms. Just take the STL.
+I should recall (again) that the point of this library is not to make an awesome container-algorithms pipeline. What I'm trying to do is to have a working container-algorithms pipeline without many effort, without having to rewrite those algorithms. Just take the STL.
 
 Requirements
 ------------
@@ -79,7 +79,7 @@ auto sort = make_algorithm(std::sort);
 auto w = sort(v);
 ```
 
-Of course is not that easy. Different STL algorithms take different number of parameters and operate on ranges in a different way. Some algorithms are mutable on the input range, some others take two ranges (input/output), etc. We should identify the category of the target algorithm to take the appropiate functor.   
+Of course is not that easy. Different STL algorithms take different number of parameters and operate on ranges in a different way. Some algorithms are mutable on the input range, some others take two ranges (input/output), etc. We should identify the category of the target algorithm to take the correct functor.   
 The macro `algorithm_category(algorithm, category)` specifies the category of an algorithm, so when the user requests the container-algorithm equivalent calling `make_algorithm()` the correct functor is applied.
 
 ``` cpp
@@ -127,14 +127,14 @@ int main()
 }
 ```
 
-Note that container algorithms are designed to be used within the continuation. For example, the `binary_mutable` category translates algorithms taking an input range writting some transformation on an output range, generating a container algorithm that takes a container and outputs another container. Since the continuation starts with one specific container, the output container type of `binary_mutable` algorithms is the same as its input by default, to make the continuation *continue* in a natural way.
+Note that container algorithms are designed to be used within the continuation. For example, the `binary_mutable` category translates algorithms taking an input range writing some transformation on an output range, generating a container algorithm that takes a container and outputs another container. Since the continuation starts with one specific container, the output container type of `binary_mutable` algorithms is the same as its input by default, to make the continuation *continue* in a natural way.
 
 Why snail?
 ----------
 
-I have always had problems when naming projects. "*Containuation*"? Let's get simpler and choose a random animal name :)
+I have always had problems when naming projects. "*Containuation*"? Let's get simpler and choose a random animal name...
 
-![](https://raw.githubusercontent.com/Manu343726/snail/master/snail.jpg)
+![my friend the snail](https://raw.githubusercontent.com/Manu343726/snail/master/snail.jpg)
 
-Judge the library by it's features, not by its name.
+Judge the library by it's features, not by its mascot :)
 
