@@ -7,8 +7,8 @@ env:
   - LIBCXX=true BUILD_TYPE=Release
   - LIBCXX=false BUILD_TYPE=Debug
   - LIBCXX=false BUILD_TYPE=Release
-global:
-  - GCC_VERSION="4.9"
+  global:
+    - GCC_VERSION="4.9"
 matrix:
   exclude:
     - compiler: gcc
