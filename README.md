@@ -128,7 +128,7 @@ Why snail?
 
 I have always had problems when naming projects. "*Containuation*"? Let's get simpler and choose a random animal name :)
 
-
+![](https://raw.githubusercontent.com/Manu343726/snail/master/snail.jpg)
 
 Judge the library by it's features, not by its name.
 
