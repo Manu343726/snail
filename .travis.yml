@@ -12,7 +12,9 @@ global:
 matrix:
   exclude:
     - compiler: gcc
-      env: LIBCXX=true
+      env: LIBCXX=true BUILD_TYPE=Debug
+    - compiler: gcc
+      env: LIBCXX=true BUILD_TYPE=Release
 
 before_install:
   - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
