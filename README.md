@@ -7,9 +7,9 @@ Motivation
 ----------
 
 The C++ Standard Library comes with a very well suited set of generic algorithms. The iterator-range design of such algorithms decouples them completely from the underlying data they are operating on,
-which makes possible to apply such algorithms on any entity, if a compatible iterator interface is provided. 
+making it possible to apply such algorithms on any entity, if a compatible iterator interface is provided. 
 
-My favorite example are stream iterators:
+My favorite example is stream iterators:
 
 ``` cpp
 auto numbers = {1, 2, 3, 4, 5};
@@ -20,7 +20,7 @@ std::copy(std::begin(numbers), std::end(numbers),
 
 The above snippet prints the set of numbers on the standard output. It "copies" the numeric sequence to a sequence of output operations represented by a `std::ostream_iterator` instance.
 
-But everything is not that simple and awesome. The iterator-range interface comes at a high cost: **Is not easy to chain multiple STL algorithms**.  Whenever you want to apply multiple algorithms step by step the process becomes a bit clumsy:
+But not everything is that simple and awesome. The iterator-range interface comes at a high cost: **it's not easy to chain multiple STL algorithms**.  Whenever you want to apply multiple algorithms step by step the process becomes a bit clumsy:
 
 ``` cpp
 std::vector<int> v = {1, 2, 3, 5, 7, 11};
@@ -36,14 +36,14 @@ w.clear();
 std::sort(std::begin(v), std::end(v), std::less<int>{});
 ```
 
-Compare that to the more natural fluent interface operating on the same vector along the pipeline of operations:
+Compare that to the more natural, fluent interface operating on the same vector along the pipeline of operations:
 
 ``` cpp
 v.filter([](int x){ return is_prime(x); })
  .sort(std::less<int>{})
 ```
 
-Snail is my try to get a continuation-ready set of algorithms to operate on C++ containers, but instead of reinventing all the algorithms, addapting them though a continuation monad (Or something resembling a continuation monad).
+Snail is my try to get a continuation-ready set of algorithms to operate on C++ containers, but instead of reinventing all the algorithms, addapting them through a continuation monad (or something resembling a continuation monad).
 
 Design choices
 --------------
@@ -58,7 +58,7 @@ With snail I have two main goals:
 
  - **Simple syntax**: Allow consecutive algorithm calls on the same container, with a simple pipe-like syntax built on top of a continuation monad. This is not something new, see Boost.Range or Eric Niebler's range-v3 container algorithms. My point here is to have a working set of pipeable algorithms with a couple of lines only, using existing STL algorithms.
 
-I should recall (again) that the point of this library is not to make an awesome container-algorithms pipeline. What I'm trying to do is to have a working container-algorithms pipeline without many effort, without having to rewrite those algorithms. Just take the STL.
+I should recall (again) that the point of this library is not to make an awesome container-algorithms pipeline. What I'm trying to do is to have a working container-algorithms pipeline without much effort, without having to rewrite those algorithms. Just take the STL.
 
 Requirements
 ------------
@@ -79,7 +79,7 @@ auto sort = make_algorithm(std::sort);
 auto w = sort(v);
 ```
 
-Of course is not that easy. Different STL algorithms take different number of parameters and operate on ranges in a different way. Some algorithms are mutable on the input range, some others take two ranges (input/output), etc. We should identify the category of the target algorithm to take the correct functor.   
+It is obviously not that easy. Different STL algorithms take different number of parameters and operate on ranges in a different way. Some algorithms are mutable on the input range, some others take two ranges (input/output), etc. We should identify the category of the target algorithm to take the correct functor.   
 The macro `algorithm_category(algorithm, category)` specifies the category of an algorithm, so when the user requests the container-algorithm equivalent calling `make_algorithm()` the correct functor is applied.
 
 ``` cpp
