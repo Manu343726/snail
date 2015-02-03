@@ -20,7 +20,9 @@ namespace snail
 			{
 				return [=](const auto& container) -> decltype(container)
 				{
-					algorithm( std::begin(container), std::end(container), f);
+					using std::begin;
+					using std::end;
+					algorithm( begin(container), end(container), f);
 
 					return container;
 				};
@@ -38,7 +40,9 @@ namespace snail
 			{
 				return [=](auto container)
 				{
-					algorithm( std::begin(container), std::end(container), f);
+					using std::begin;
+					using std::end;
+					algorithm( begin(container), end(container), f);
 
 					return std::move(container);
 				};
@@ -56,10 +60,13 @@ namespace snail
 			{
 				return [=](const auto& container)
 				{
+					using std::begin;
+					using std::end;
+					using std::back_inserter;
 					tml::eval<std::remove_cv<std::remove_reference<decltype(container)>>> out;
 
-					algorithm( std::begin(container), std::end(container),
-					           std::back_inserter(out), f);
+					algorithm( begin(container), end(container),
+					           back_inserter(out), f);
 
 					return std::move(out);
 				};
@@ -77,7 +84,9 @@ namespace snail
 			{
 				return [=](const auto& container)
 				{
-					return algorithm( std::begin(container), std::end(container), f);
+					using std::begin;
+					using std::end;
+					return algorithm( begin(container), end(container), f);
 				};
 			};
 		}
@@ -93,8 +102,10 @@ namespace snail
 			{
 				return [=](const auto& container)
 				{
-					return algorithm( std::begin(container), std::end(container),
-					                  std::begin(sequence), f);
+					using std::begin;
+					using std::end;
+					return algorithm( begin(container), end(container),
+					                  begin(sequence), f);
 				};
 			};
 		}
