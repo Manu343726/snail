@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <manu343726/snail/core.hpp>
 #include <algorithm>
 

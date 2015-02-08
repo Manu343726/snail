@@ -4,6 +4,7 @@
 #include <manu343726/snail/core/hash.hpp>
 #include <manu343726/snail/core/entity.hpp>
 #include <manu343726/snail/core/categories.hpp>
+#include <manu343726/snail/core/basic_categories.hpp>
 #include <manu343726/snail/core/algorithm.hpp>
 #include <manu343726/snail/core/container.hpp>
 

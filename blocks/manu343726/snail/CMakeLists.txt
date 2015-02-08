@@ -2,8 +2,12 @@
 # Initializes block variables
 INIT_BIICODE_BLOCK()
 
+include(biicode/boost/setup)
+
 # Actually create targets: EXEcutables and libraries.
 ADD_BIICODE_TARGETS()
+
+bii_find_boost()
 
 target_compile_options(${BII_BLOCK_TARGET} INTERFACE -std=c++1y)
 
